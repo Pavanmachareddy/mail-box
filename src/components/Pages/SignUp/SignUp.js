@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { Link } from "react-router-dom";
  import "./SignUp.css";
 
 const SignUp = () => {
@@ -65,9 +66,12 @@ const SignUp = () => {
           ref={inputConfirmPasswordRef}
         />
 
-        <div>
+        
           <button className="signUpBtn" >SignUp</button>
-        </div>
+
+          <p>
+          Already Register?<Link to="/login">Login</Link>
+        </p>
       </form>
     </div>
   );
