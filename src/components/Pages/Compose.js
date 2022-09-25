@@ -24,7 +24,7 @@ const Compose = () => {
       body: draftToHtml(convertToRaw(editorState.getCurrentContent())),
     };
     fetch(
-      `https://mail-box-121cf-default-rtdb.firebaseio.com/${CleanUserEmail}sentemail.json`,
+      `https://mail-box-121cf-default-rtdb.firebaseio.com/${CleanUserEmail}sentemails.json`,
       {
         method: "POST",
         body: JSON.stringify(emailData),
@@ -33,10 +33,10 @@ const Compose = () => {
         },
       }
     )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
+      .then((res) => {
+        console.log(res,'....res')
+        res.json()
+    } )
 
     toEmailRef.current.value = "";
     emailHeadingRef.current.value = "";

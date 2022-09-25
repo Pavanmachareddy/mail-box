@@ -2,32 +2,36 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const Outbox = () => {
-  const [email, setEmails] = useState({});
+  const [emails, setEmails] = useState({});
   const cleanUserEmail = useSelector((state) => state.auth.cleanEmail);
 
   useEffect(() => {
     fetch(
-      `https://mail-box-121cf-default-rtdb.firebaseio.com/${cleanUserEmail}sentemail.json`
+      `https://mail-box-121cf-default-rtdb.firebaseio.com/${cleanUserEmail}sentemails.json`
     )
       .then((res) => res.json())
       .then((data) => {
         setEmails(data);
+        console.log(data,'................data')
       });
   }, [cleanUserEmail]);
 
-  const emailList = email ? (
+  const emailList = emails ? (
     <ul>
-      {Object.keys(email).map((item) => (
+      {Object.keys(emails).map((item) => (
         <p style={{ border: "2px solid black", textAlign: "left" }} key={item}>
-          <label style={{ textAlign: "left" }}>To: {email[item].to}</label>
-          <label>Heading: {email[item].heading}</label>
-          <p dangerouslySetInnerHTML={{ _html: email[item].body }}></p>
+          <label style={{ textAlign: "left" }}>To: {emails[item].to}</label>
+          <hr/>
+          <label>Heading: {emails[item].heading}</label>
+          <hr/>
+          <p dangerouslySetInnerHTML={{ __html: emails[item].body }}></p>
         </p>
       ))}
     </ul>
   ) : (
-    <p>No Email Found</p>
+    <p>No Emails Found</p>
   );
+  
   return (
     <div>
       <h4>This is outbox</h4>
