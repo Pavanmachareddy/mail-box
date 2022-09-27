@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate ,Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { authActions } from "../../store/authreducer";
 import "./Login.css";
 
@@ -42,8 +42,10 @@ const Login = () => {
       .then((data) => {
         localStorage.setItem("idToken", data.idToken);
         dispatch(authActions.login(data.idToken));
-          dispatch(authActions.setEmail(data.email));
-          dispatch(authActions.setCleanEmail(data.email.replace(/[^a-zA-Z ]/g, "")));
+        dispatch(authActions.setEmail(data.email));
+        dispatch(
+          authActions.setCleanEmail(data.email.replace(/[^a-zA-Z ]/g, ""))
+        );
         navigate("/welcome");
       })
       .catch((err) => {
@@ -62,7 +64,7 @@ const Login = () => {
           required
           ref={passwordRef}
         />
-        <Link to='/forgetpage'>ForgotPassword</Link>
+        <Link to="/forgetpage">ForgotPassword</Link>
         <button type="submit" className="loginBtn">
           Login
         </button>
