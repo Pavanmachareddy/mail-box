@@ -1,13 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Icon } from "semantic-ui-react";
 import SingleMail from "./SingleMail";
 
 const Inbox = (props) => {
   const [emails, setEmails] = useState({});
   const [singleMail, setSingleMail] = useState("");
-  const [isread, setIsread] = useState(false);
-  const cleanUserEmail = useSelector((state) => state.auth.cleanEmail);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -26,6 +22,8 @@ const Inbox = (props) => {
         console.log(data, "......inboxdata");
       });
   }, [show]);
+
+  //Unread msg
   useEffect(() => {
     let arr = [];
     for (let key in emails) {
@@ -42,7 +40,6 @@ const Inbox = (props) => {
       email: emails[e.currentTarget.id],
       ID: e.currentTarget.id,
     });
-    setIsread(true);
   };
 
   console.log(emails);
@@ -133,11 +130,19 @@ const Inbox = (props) => {
       })}
     </ul>
   ) : (
-    <p>No Emails Found</p>
+    <p>
+      No Emails Found
+      <button onClick={() => onSingleMailBackHandler()}>Back</button>
+    </p>
   );
 
-  const onSingleMailCloseHandler = () => {
+  const onSingleMailBackHandler = () => {
     setShow(true);
+    setSingleMail("");
+  };
+
+  const onSingleMailDeleteHandler = (data) => {
+    setEmails(data);
     setSingleMail("");
   };
 
@@ -148,7 +153,8 @@ const Inbox = (props) => {
       {singleMail && (
         <>
           <SingleMail
-            onClose={onSingleMailCloseHandler}
+            onClose={onSingleMailBackHandler}
+            onDelete={onSingleMailDeleteHandler}
             data={singleMail}
             setShow={setShow}
           />

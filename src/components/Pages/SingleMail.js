@@ -1,21 +1,15 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-// import { Icon } from "semantic-ui-react";
 
 const SingleMail = (props) => {
-  const cleanUserEmail = useSelector((state) => state.auth.cleanEmail);
-  console.log(cleanUserEmail);
-  console.log(props.data.email.isRead);
-
   const endpoint = props.data.ID;
 
+  console.log(props.data.email.isRead);
   console.log(endpoint, "............");
 
   useEffect(() => {
-    const body1 = props.data.email.body.replace(/<[^>]*>/g, "")
+    const body1 = props.data.email.body.replace(/<[^>]*>/g, "");
     fetch(
       `https://mail-box-121cf-default-rtdb.firebaseio.com/sentemails/${endpoint}.json`,
-      //   `https://mailboxclient-default-rtdb.firebaseio.com/${cleanUserEmail}/inbox/${endpoint}.json`,
       {
         method: "PATCH",
         headers: {
@@ -27,7 +21,7 @@ const SingleMail = (props) => {
           heading: props.data.email.heading,
           body: body1,
           isRead: false,
-          id:props.data.email.id
+          id: props.data.email.id,
         }),
       }
     )
@@ -37,18 +31,35 @@ const SingleMail = (props) => {
       })
       .then((data) => {
         console.log(data);
-        return props.setBlue(props.data.email.id);
       });
   }, []);
+
   console.log(props.data.email.body.replace(/<[^>]*>/g, ""));
   const msg = props.data.email.body.replace(/<[^>]*>/g, "");
+
+  const deleteHandler = () => {
+    fetch(
+      `https://mail-box-121cf-default-rtdb.firebaseio.com/sentemails/${endpoint}.json`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        props.onDelete(data);
+      });
+  };
+
   return (
     <div>
       <button style={{ aligntext: "right" }} onClick={props.onClose}>
         Back
       </button>
+      <button onClick={deleteHandler}>Delete</button>
       <div>
-        {/* <Icon name="circle outline"></Icon> */}
         <span>From:</span>
         <span>
           <b>{props.data.email.to}</b>
