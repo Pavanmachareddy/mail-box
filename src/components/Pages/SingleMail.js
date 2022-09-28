@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const SingleMail = (props) => {
+  // const UserEmails = useSelector(state=>state.auth.cleanUser)
   const endpoint = props.data.ID;
 
   console.log(props.data.email.isRead);

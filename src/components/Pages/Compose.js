@@ -2,18 +2,18 @@ import React, { useRef, useState } from "react";
 import { convertToRaw, EditorState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
-import './Compose.css';
+import "./Compose.css";
 import { useSelector } from "react-redux";
-import { v4 } from "uuid";
+// import { v4 } from "uuid";
 
 const Compose = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const toEmailRef = useRef();
   const emailHeadingRef = useRef();
-  const userEmail = useSelector((state)=>state.auth.email);
-  const CleanUserEmail = useSelector((state)=>state.auth.cleanEmail);
-
-  console.log(editorState,'editorState.................')
+  const userEmail = useSelector((state) => state.auth.email);
+  const UserEmails = useSelector((state) => state.auth.cleanEmail);
+  console.log(UserEmails, "clean.......");
+  console.log(userEmail, "emails");
 
   const onEditorStateChange = (currEditorState) => {
     setEditorState(currEditorState);
@@ -25,12 +25,12 @@ const Compose = () => {
       to: toEmailRef.current.value,
       heading: emailHeadingRef.current.value,
       body: draftToHtml(convertToRaw(editorState.getCurrentContent())),
-      isRead:true,
-      id:v4()
+      isRead: true,
+      // id:v4()
     };
-    console.log(emailData,"emailData........................")
+    console.log(emailData, "emailData........................");
     fetch(
-      `https://mail-box-121cf-default-rtdb.firebaseio.com/${CleanUserEmail}sentemails.json`,
+      `https://mail-box-121cf-default-rtdb.firebaseio.com/${UserEmails}/sentemails.json`,
       {
         method: "POST",
         body: JSON.stringify(emailData),
@@ -38,11 +38,10 @@ const Compose = () => {
           "Content-type": "application/json",
         },
       }
-    )
-      .then((res) => {
-        console.log(res,'....res')
-        res.json()
-    } )
+    ).then((res) => {
+      console.log(res, "....res");
+      res.json();
+    });
 
     toEmailRef.current.value = "";
     emailHeadingRef.current.value = "";
@@ -71,7 +70,9 @@ const Compose = () => {
         />
       </div>
 
-      <button className="btn" onClick={sendMailHandler}>Send</button>
+      <button className="btn" onClick={sendMailHandler}>
+        Send
+      </button>
     </div>
   );
 };

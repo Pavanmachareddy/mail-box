@@ -1,10 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import SingleMail from "./SingleMail";
 
 const Inbox = (props) => {
   const [emails, setEmails] = useState({});
   const [singleMail, setSingleMail] = useState("");
   const [show, setShow] = useState(false);
+  // const UserEmails =useSelector(state=>state.auth.cleanEmail)
+  // console.log(UserEmails,"userEmails")
 
   useEffect(() => {
     fetch(

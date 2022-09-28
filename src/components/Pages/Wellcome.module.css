@@ -5,6 +5,18 @@
   float: left;
   overflow: scroll;
 }
+
+.logBtn{
+  width: 20%;
+  background-color: rgb(216, 26, 26);
+  padding: 10px;
+  margin-bottom: 4px;
+  border-radius: 8px;
+  margin-left: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  
+}
 .sideNav {
   width: 20vw;
   /* background-color: rgb(63, 147, 236); */

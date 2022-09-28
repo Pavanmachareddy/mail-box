@@ -3,29 +3,28 @@ import { useSelector } from "react-redux";
 
 const Outbox = () => {
   const [emails, setEmails] = useState({});
-  const cleanUserEmail = useSelector((state) => state.auth.cleanEmail);
+  const UserEmails = useSelector((state) => state.auth.cleanEmail);
 
   useEffect(() => {
     fetch(
-      `https://mail-box-121cf-default-rtdb.firebaseio.com/${cleanUserEmail}sentemails.json`
+      `https://mail-box-121cf-default-rtdb.firebaseio.com/${UserEmails}/sentemails.json`
     )
       .then((res) => res.json())
       .then((data) => {
         setEmails(data);
-        console.log(data,'................data')
+        console.log(data, "................data");
       });
-  }, [cleanUserEmail]);
+  }, [UserEmails]);
 
-
-  console.log(emails,'emailsssssssssss')
+  console.log(emails, "emailsssssssssss");
   const emailList = emails ? (
     <ul>
       {Object.keys(emails).map((item) => (
         <p style={{ border: "2px solid black", textAlign: "left" }} key={item}>
           <label style={{ textAlign: "left" }}>To: {emails[item].to}</label>
-          <hr/>
+          <hr />
           <label>Heading: {emails[item].heading}</label>
-          <hr/>
+          <hr />
           <p>{emails[item].body.replace(/<[^>]*>/g, "")}</p>
         </p>
       ))}
@@ -33,7 +32,7 @@ const Outbox = () => {
   ) : (
     <p>No Emails Found</p>
   );
-  
+
   return (
     <div>
       <h4>This is outbox</h4>
