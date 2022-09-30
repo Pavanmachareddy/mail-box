@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
- import "./SignUp.css";
+import "./SignUp.css";
 
 const SignUp = () => {
   const inputEmailRef = useRef();
@@ -42,14 +42,14 @@ const SignUp = () => {
         });
       }
     });
-    inputEmailRef.current.value="";
-    inputPasswordRef.current.value="";
-    inputConfirmPasswordRef.current.value="";
+    inputEmailRef.current.value = "";
+    inputPasswordRef.current.value = "";
+    inputConfirmPasswordRef.current.value = "";
   };
   return (
     <div className="signUpBody">
       <h2>SignUp</h2>
-      <form className='signUpform' onSubmit={submitHandler}>
+      <form className="signUpform" onSubmit={submitHandler}>
         <input type="email" placeholder="Email" required ref={inputEmailRef} />
 
         <input
@@ -66,10 +66,9 @@ const SignUp = () => {
           ref={inputConfirmPasswordRef}
         />
 
-        
-          <button className="signUpBtn" >SignUp</button>
+        <button className="signUpBtn">SignUp</button>
 
-          <p>
+        <p>
           Already Register?<Link to="/login">Login</Link>
         </p>
       </form>

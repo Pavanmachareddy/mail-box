@@ -1,43 +1,139 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import SingleMail from "./SingleMail";
 
-const Outbox = () => {
+const Outbox = (props) => {
   const [emails, setEmails] = useState({});
-  const UserEmails = useSelector((state) => state.auth.cleanEmail);
+  const [singleMail, setSingleMail] = useState("");
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     fetch(
-      `https://mail-box-121cf-default-rtdb.firebaseio.com/${UserEmails}/sentemails.json`
+      `https://mail-box-121cf-default-rtdb.firebaseio.com/sentemails.json`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     )
       .then((res) => res.json())
       .then((data) => {
         setEmails(data);
-        console.log(data, "................data");
+        console.log(data, "......inboxdata");
       });
-  }, [UserEmails]);
+  }, [show]);
+  const openEmailClickHandler = (e) => {
+    setSingleMail({
+      email: emails[e.currentTarget.id],
+      ID: e.currentTarget.id,
+    });
+  };
 
-  console.log(emails, "emailsssssssssss");
+  console.log(emails);
   const emailList = emails ? (
-    <ul>
-      {Object.keys(emails).map((item) => (
-        <p style={{ border: "2px solid black", textAlign: "left" }} key={item}>
-          <label style={{ textAlign: "left" }}>To: {emails[item].to}</label>
-          <hr />
-          <label>Heading: {emails[item].heading}</label>
-          <hr />
-          <p>{emails[item].body.replace(/<[^>]*>/g, "")}</p>
-        </p>
-      ))}
+    <ul style={{ marginTop: "20px" }}>
+      {Object.keys(emails).map((item) => {
+        console.log(emails[item].isRead);
+
+        return (
+          <li
+            id={item}
+            onClick={openEmailClickHandler}
+            style={{
+              border: "1px solid black",
+              textAlign: "left",
+              marginTop: "14px",
+              borderRadius: "5px",
+            }}
+            key={item}
+          >
+            <div
+              style={{
+                paddingRight: "10px",
+              }}
+            >
+              <span
+                style={{
+                  fontWeight: "bold",
+                }}
+              >
+                To:
+              </span>
+              <span>{emails[item].to}</span>
+            </div>
+            <br />
+            <div>
+              <span
+                style={{
+                  fontWeight: "bold",
+                }}
+              >
+                Subject:
+              </span>
+              <span> {emails[item].heading}</span>
+            </div>
+            <br />
+            <div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "1000px",
+                }}
+              >
+                <div>
+                  <span
+                    style={{
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Msg:
+                  </span>
+                  <span style={{}}>
+                    {" "}
+                    {emails[item].body.replace(/<[^>]*>/g, "")}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <br />
+          </li>
+        );
+      })}
     </ul>
   ) : (
-    <p>No Emails Found</p>
+    <p>
+      No Emails Found
+      <button onClick={() => onSingleMailBackHandler()}>Back</button>
+    </p>
   );
 
+  const onSingleMailBackHandler = () => {
+    // setShow(true);
+    setSingleMail("");
+  };
+
+  const onSingleMailDeleteHandler = (data) => {
+    setEmails(data);
+    setSingleMail("");
+  };
+
+  console.log(singleMail);
   return (
-    <div>
-      <h4>This is outbox</h4>
-      {emailList}
-    </div>
+    <Fragment>
+      {!singleMail && emailList}
+      {singleMail && (
+        <>
+          <SingleMail
+            onClose={onSingleMailBackHandler}
+            onDelete={onSingleMailDeleteHandler}
+            data={singleMail}
+            // setShow={setShow}
+          />
+        </>
+      )}
+    </Fragment>
   );
 };
 

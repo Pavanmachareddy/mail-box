@@ -4,7 +4,7 @@ import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import "./Compose.css";
 import { useSelector } from "react-redux";
-// import { v4 } from "uuid";
+import { v4 } from "uuid";
 
 const Compose = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -12,8 +12,6 @@ const Compose = () => {
   const emailHeadingRef = useRef();
   const userEmail = useSelector((state) => state.auth.email);
   const UserEmails = useSelector((state) => state.auth.cleanEmail);
-  console.log(UserEmails, "clean.......");
-  console.log(userEmail, "emails");
 
   const onEditorStateChange = (currEditorState) => {
     setEditorState(currEditorState);
@@ -26,7 +24,7 @@ const Compose = () => {
       heading: emailHeadingRef.current.value,
       body: draftToHtml(convertToRaw(editorState.getCurrentContent())),
       isRead: true,
-      // id:v4()
+      id:v4()
     };
     console.log(emailData, "emailData........................");
     fetch(
@@ -46,6 +44,12 @@ const Compose = () => {
     toEmailRef.current.value = "";
     emailHeadingRef.current.value = "";
     setEditorState(EditorState.createEmpty());
+    
+    
+    setTimeout(()=>{
+      window.location.reload()
+    },2000)
+    
   };
   return (
     <div>
