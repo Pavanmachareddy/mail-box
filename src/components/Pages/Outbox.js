@@ -44,6 +44,8 @@ const Outbox = (props) => {
               border: "1px solid black",
               textAlign: "left",
               marginTop: "14px",
+              height: "30px",
+              overflow: "hidden",
               borderRadius: "5px",
             }}
             key={item}
@@ -105,7 +107,7 @@ const Outbox = (props) => {
   ) : (
     <p>
       No Emails Found
-      <button onClick={() => onSingleMailBackHandler()}>Back</button>
+      {/* <button onClick={() => onSingleMailBackHandler()}>Back</button> */}
     </p>
   );
 
@@ -122,6 +124,7 @@ const Outbox = (props) => {
   console.log(singleMail);
   return (
     <Fragment>
+      <h4>This is Outbox</h4>
       {!singleMail && emailList}
       {singleMail && (
         <>

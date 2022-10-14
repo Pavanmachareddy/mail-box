@@ -52,6 +52,7 @@ const SingleMail = (props) => {
       .then((res) => res.json())
       .then((data) => {
         props.onDelete(data);
+        window.location.reload();
       });
   };
 

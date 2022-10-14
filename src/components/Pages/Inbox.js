@@ -56,10 +56,27 @@ const Inbox = (props) => {
               border: "1px solid black",
               textAlign: "left",
               marginTop: "14px",
+              height: "50px",
+              overflow: "hidden",
               borderRadius: "5px",
             }}
             key={item}
           >
+            <div
+              style={{
+                backgroundColor: emails
+                  ? emails[item]
+                    ? emails[item].isRead
+                      ? "blue"
+                      : "white"
+                    : ""
+                  : "",
+                height: "10px",
+                width: "10px",
+                marginTop: "7px",
+                border: "1px solid black",
+              }}
+            ></div>
             <div
               style={{
                 paddingRight: "10px",
@@ -72,7 +89,7 @@ const Inbox = (props) => {
               >
                 From:
               </span>
-              <span>{emails[item].from}</span>
+              <span>{emails[item].to}</span>
             </div>
             <br />
             <div>
@@ -107,21 +124,6 @@ const Inbox = (props) => {
                     {emails[item].body.replace(/<[^>]*>/g, "")}
                   </span>
                 </div>
-                <div
-                  style={{
-                    backgroundColor: emails
-                      ? emails[item]
-                        ? emails[item].isRead
-                          ? "blue"
-                          : "white"
-                        : ""
-                      : "",
-                    height: "10px",
-                    width: "10px",
-                    marginTop: "7px",
-                    border: "1px solid black",
-                  }}
-                ></div>
               </div>
             </div>
             <br />
@@ -132,7 +134,7 @@ const Inbox = (props) => {
   ) : (
     <p>
       No Emails Found
-      <button onClick={() => onSingleMailBackHandler()}>Back</button>
+      {/* <button onClick={() => onSingleMailBackHandler()}>Back</button> */}
     </p>
   );
 
@@ -149,6 +151,7 @@ const Inbox = (props) => {
   console.log(singleMail);
   return (
     <Fragment>
+    <h4>This is Inbox</h4>
       {!singleMail && emailList}
       {singleMail && (
         <>
