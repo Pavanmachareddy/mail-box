@@ -28,7 +28,7 @@ const Compose = () => {
     };
     console.log(emailData, "emailData........................");
     fetch(
-      `https://mail-box-121cf-default-rtdb.firebaseio.com/${UserEmails}/sentemails.json`,
+      `https://mailbox-client-4e6aa-default-rtdb.firebaseio.com/${UserEmails}/sentemails.json`,
       {
         method: "POST",
         body: JSON.stringify(emailData),

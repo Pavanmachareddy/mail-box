@@ -8,7 +8,7 @@ const Inbox = (props) => {
 
   useEffect(() => {
     fetch(
-      `https://mail-box-121cf-default-rtdb.firebaseio.com/sentemails.json`,
+      `https://mailbox-client-4e6aa-default-rtdb.firebaseio.com/sentemails.json`,
       {
         method: "GET",
         headers: {

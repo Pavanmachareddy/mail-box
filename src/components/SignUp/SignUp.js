@@ -19,7 +19,7 @@ const SignUp = () => {
     }
 
     fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCo2sEtkLY181PMqO0HJJh5kixj1KFfvzQ",
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB3RBsFQVSKs7Xbh7wE5c499hN6mGdiP4w",
       {
         method: "POST",
         body: JSON.stringify({
